@@ -7,28 +7,31 @@ int main(void) {
     int code_error = 0;
 
     ListCtor(&lst, &code_error);
-    DotDump(&lst, &code_error);
-    GraphCreate();
+    // DotDump(&lst, &code_error);
+    // GraphCreate();
 
     // debug
 
-    PhysInsertElem(&lst, 10, 0, &code_error);
+    for(int i = 1; i <= 5; i++) {
+    InsertElem(&lst, i * 10, i, &code_error);
+    }
     DotDump(&lst, &code_error);
     GraphCreate();
 
-    // debug
+    // // debug
 
-    PhysInsertElem(&lst, 20, 1, &code_error);
+    InsertElem(&lst, 15, 2, &code_error);
     DotDump(&lst, &code_error);
     GraphCreate();
     // // DeleteElem(&lst, 1, &code_error);
 
     // debug
 
-    PhysInsertElem(&lst, 15, 8, &code_error);
-    DotDump(&lst, &code_error);
-    GraphCreate();
-    DeleteElem(&lst, 1, &code_error);
+    // InsertElem(&lst, 15, 1, &code_error);
+    // DotDump(&lst, &code_error);
+    // GraphCreate();
+
+    DeleteElem(&lst, 5, &code_error);
     DotDump(&lst, &code_error);
     GraphCreate();
 

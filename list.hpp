@@ -47,6 +47,10 @@ void ListCtor(List* lst, int* code_error);
 
 void PhysInsertElem(List* lst, ListElem elem, size_t position, int* code_error);
 
+void InsertElem(List* lst, ListElem elem, size_t position, int* code_error);
+
+size_t IndxGet(const List* lst, const size_t position, int* code_error);
+
 void DeleteElem(List* lst, size_t position, int* code_error);
 
 void ListDtor(List* lst, int* code_error);
