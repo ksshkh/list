@@ -7,9 +7,9 @@ CFLAGS = -c -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-
 	-Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing   \
 	-Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -Werror=vla -D_DEBUG -D_EJUDGE_CLIENT_SIDE
 
-INCLUDES = ./list.hpp ./errors.hpp
+INCLUDES = ./list.hpp ./dumplist.hpp ./errors.hpp
 
-SOURCES = ./main.cpp ./list.cpp ./errors.cpp
+SOURCES = ./main.cpp ./list.cpp ./dumplist.cpp ./errors.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
@@ -27,3 +27,5 @@ $(EXECUTABLE): $(OBJECTS)
 clean:
 	rm -rf *.o
 	rm -rf list
+	rm -rf ./debug/list.dot
+	rm -rf ./debug/*.png

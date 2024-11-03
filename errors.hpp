@@ -31,8 +31,6 @@ enum Errors {
 
 #define CHECKED_ if(!code_error) code_error |=
 
-#define CODE_ERROR int *code_error
-
 #define MY_ASSERT(expression, err) if(!(expression)) {                                                                      \
     fprintf(stderr, ERR("%s: %d (%s) My assertion failed: \"" #expression "\""), __FILE__, __LINE__, __func__);             \
     *code_error |= err;                                                                                                     \
