@@ -6,14 +6,12 @@
 
 #include "list.hpp"
 
-#define NODE_COLOR "\"#F1C8CB\""
-#define LABEL_COLOR "\"#F6B0BB\""
-#define NODE_BORDER_COLOR "\"#9CAD8C\""
-#define LABEL_BORDER_COLOR "\"#337357\""
-#define BACKGROUND_COLOR "\"#ECE0DA\""
+#define LIST_DUMP(lst, code_error) ListDump((lst), (code_error), __FILE__, __func__, __LINE__)
 
 void DotDump(List* lst, int* code_error);
 
 void GraphCreate(void);
+
+void ListDump(const List* lst, int* code_error, const char* file, const char* func, int line);
 
 #endif // DUMPLIST_HPP

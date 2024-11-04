@@ -20,33 +20,31 @@ struct List {
     size_t size = 0;
 };
 
-
 const size_t PHANTOM_ELEM = 0;
-const size_t InitSize = 10;
 const ListElem POISON = -666;
 const size_t PREV_DEFAULT = -1;
 
-#define debug fprintf(stderr, "head: %d tail: %d free: %d\n", lst.head, lst.tail, lst.free); \
-    for(size_t i = 0; i < InitSize; i++) { \
-        fprintf(stderr, "%4d", lst.data[i].value); \
-    } \
-    fprintf(stderr, "\n"); \
-    for(size_t i = 0; i < InitSize; i++) { \
-        fprintf(stderr, "%4d", lst.data[i].next); \
-    } \
-    fprintf(stderr, "\n"); \
-    for(size_t i = 0; i < InitSize; i++) { \
-        fprintf(stderr, "%4d", lst.data[i].prev); \
-    } \
-    fprintf(stderr, "\n"); \
+#define LST_HEAD lst->data[PHANTOM_ELEM].next
+#define LST_TAIL lst->data[PHANTOM_ELEM].prev
 
-void ListCtor(List* lst, int* code_error);
+#define LIST_ASSERT(lst) {                                           \
+    int err = ListVerification(lst, code_error);                     \
+    if (err != NO_ERROR) {                                           \
+        LIST_DUMP(lst, code_error);                                  \
+    }                                                                \
+}
+
+void ListCtor(List* lst, size_t InitSize, int* code_error);
+
+void ListFilling(List* lst, int* code_error);
+
+int ListVerification(List* lst, int* code_error);
 
 void PhysInsertElem(List* lst, ListElem elem, size_t position, int* code_error);
 
-void InsertElem(List* lst, ListElem elem, size_t position, int* code_error);
+void LogInsertElem(List* lst, ListElem elem, size_t position, int* code_error);
 
-size_t IndxGet(const List* lst, const size_t position, int* code_error);
+size_t IndxGet(List* lst, const size_t position, int* code_error);
 
 void DeleteElem(List* lst, size_t position, int* code_error);
 

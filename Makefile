@@ -26,6 +26,7 @@ $(EXECUTABLE): $(OBJECTS)
 .PHONY: clean
 clean:
 	rm -rf *.o
+	rm -rf ./debug/*.txt
 	rm -rf list
 	rm -rf ./debug/list.dot
 	rm -rf ./debug/*.png
