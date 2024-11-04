@@ -1,25 +1,36 @@
 digraph List{
 	rankdir = LR;
 	node [shape = record];
-	edge[color = "#474344"];
-	bgcolor = "#DFD0BB";
-	0 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 0 | data: -666 | next: 1 | prev: 5"];
-	1 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 1 | data: 10 | next: 6 | prev: 0"];
-	2 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 2 | data: 20 | next: 3 | prev: 6"];
-	3 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 3 | data: 30 | next: 5 | prev: 2"];
-	4 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 4 | data: 40 | next: 7 | prev: -1"];
-	5 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 5 | data: 50 | next: 0 | prev: 3"];
-	6 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 6 | data: 15 | next: 2 | prev: 1"];
-	7 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 7 | data: 0 | next: 8 | prev: -1"];
-	8 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 8 | data: 0 | next: 9 | prev: -1"];
-	9 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 9 | data: 0 | next: 10 | prev: -1"];
-	0 -> 1	1 -> 6	6 -> 2	2 -> 3	3 -> 5	5 -> 0
-	4 -> 7	7 -> 8	8 -> 9
-	head [shape = Mrecord, style = filled, fillcolor = "#943D2C", label = "head: 1"];
-	tail [shape = Mrecord, style = filled, fillcolor = "#943D2C", label = "tail: 5"];
-	free [shape = Mrecord, style = filled, fillcolor = "#943D2C", label = "free: 4"];
-	head -> tail -> free [weight = 100, color = "#DFD0BB"];
-	head -> 1 [color = "#474344", constraint = false];
-	tail -> 5 [color = "#474344", constraint = false];
-	free -> 4 [color = "#474344", constraint = false];
+	edge[color = "#9CAD8C"];
+	bgcolor = "#ECE0DA";
+	0 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 0 | data: -666 | next: 1 | prev: 5"];
+	1 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 1 | data: 10 | next: 6 | prev: 0"];
+	2 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 2 | data: 20 | next: 3 | prev: 6"];
+	3 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 3 | data: 30 | next: 5 | prev: 2"];
+	4 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 4 | data: 40 | next: 7 | prev: -1"];
+	5 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 5 | data: 50 | next: 0 | prev: 3"];
+	6 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 6 | data: 15 | next: 2 | prev: 1"];
+	7 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 7 | data: 0 | next: 8 | prev: -1"];
+	8 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 8 | data: 0 | next: 9 | prev: -1"];
+	9 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 9 | data: 0 | next: 10 | prev: -1"];
+
+	0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 [weight = 100, color = "#ECE0DA"];
+	0 -> 1 [constraint = false];
+	1 -> 6 [constraint = false];
+	6 -> 2 [constraint = false];
+	2 -> 3 [constraint = false];
+	3 -> 5 [constraint = false];
+	5 -> 0 [constraint = false];
+
+	4 -> 7 [constraint = false];
+	7 -> 8 [constraint = false];
+	8 -> 9 [constraint = false];
+
+	head [color = "#337357", shape = Mrecord, style = filled, fillcolor = "#F6B0BB", label = "head: 1"];
+	tail [color = "#337357", shape = Mrecord, style = filled, fillcolor = "#F6B0BB", label = "tail: 5"];
+	free [color = "#337357", shape = Mrecord, style = filled, fillcolor = "#F6B0BB", label = "free: 4"];
+	head -> tail -> free [weight = 100, color = "#ECE0DA"];
+	head -> 1 [color = "#337357", constraint = false];
+	tail -> 5 [color = "#337357", constraint = false];
+	free -> 4 [color = "#337357", constraint = false];
 }

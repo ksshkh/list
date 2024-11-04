@@ -85,8 +85,6 @@ void ListDtor(List* lst, int* code_error) {
     lst->data = NULL;
 
     lst->size = InitSize;
-    lst->head = 0;
-    lst->tail = 0;
     lst->free = 0;
 
 }

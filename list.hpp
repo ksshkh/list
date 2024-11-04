@@ -16,11 +16,7 @@ struct Node {
 
 struct List {
     Node* data = NULL;
-
-    size_t head = 0;
-    size_t tail = 0;
     size_t free = 0;
-
     size_t size = 0;
 };
 
