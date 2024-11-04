@@ -46,7 +46,15 @@ void LogInsertElem(List* lst, ListElem elem, size_t position, int* code_error);
 
 size_t IndxGet(List* lst, const size_t position, int* code_error);
 
-void DeleteElem(List* lst, size_t position, int* code_error);
+void PhysDeleteElem(List* lst, size_t indx, int* code_error);
+
+void LogDeleteElem(List* lst, size_t position, int* code_error);
+
+void SwapElems(List* lst, size_t indx1, size_t indx2, int* code_error);
+
+void ListLinear(List* lst, int* code_error);
+
+void ListReallocation(List* lst, int* code_error);
 
 void ListDtor(List* lst, int* code_error);
 

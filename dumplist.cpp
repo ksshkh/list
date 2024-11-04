@@ -49,6 +49,11 @@ void DotDump(List* lst, int* code_error) {
         i = lst->free;
 
         while(i < lst->size - 1) {
+
+            if(lst->data[i].next == lst->size) {
+                break;
+            }
+            
             fprintf(dot_file, "\t%ld -> %ld [constraint = false];\n", i, lst->data[i].next);
             i = lst->data[i].next;
         }

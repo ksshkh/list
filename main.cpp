@@ -6,9 +6,9 @@ int main(void) {
     List lst = {};
     int code_error = 0;
 
-    ListCtor(&lst, 10, &code_error);
-    // DotDump(&lst, &code_error);
-    // GraphCreate();
+    ListCtor(&lst, 2, &code_error);
+    DotDump(&lst, &code_error);
+    GraphCreate();
 
     for(int i = 1; i <= 5; i++) {
         LogInsertElem(&lst, i * 10, i, &code_error);
@@ -27,7 +27,8 @@ int main(void) {
     // DotDump(&lst, &code_error);
     // GraphCreate();
 
-    DeleteElem(&lst, 5, &code_error);
+    // PhysDeleteElem(&lst, 5, &code_error);
+    SwapElems(&lst, 2, 3, &code_error);
     DotDump(&lst, &code_error);
     GraphCreate();
 
