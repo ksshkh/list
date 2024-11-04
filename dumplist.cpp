@@ -25,11 +25,21 @@ void DotDump(List* lst, int* code_error) {
             fprintf(dot_file, "\t%ld -> %ld", i, lst->data[i].next);
             i = lst->data[i].next;
         } while(i != 0);
+        fprintf(dot_file, "\n");
+        i = lst->free;
+        while(i < lst->size - 1) {
+            fprintf(dot_file, "\t%ld -> %ld", i, lst->data[i].next);
+            i = lst->data[i].next;
+        }
 
         fprintf(dot_file, "\n");
-        fprintf(dot_file, "\thead [shape = Mrecord, style = filled, fillcolor = " LABEL_COLOR ", label = \"head: %ld\"];\n", lst->head);
-        fprintf(dot_file, "\ttail [shape = Mrecord, style = filled, fillcolor = " LABEL_COLOR ", label = \"tail: %ld\"];\n", lst->tail);
+        fprintf(dot_file, "\thead [shape = Mrecord, style = filled, fillcolor = " LABEL_COLOR ", label = \"head: %ld\"];\n", lst->data[PHANTOM_ELEM].next);
+        fprintf(dot_file, "\ttail [shape = Mrecord, style = filled, fillcolor = " LABEL_COLOR ", label = \"tail: %ld\"];\n", lst->data[PHANTOM_ELEM].prev);
         fprintf(dot_file, "\tfree [shape = Mrecord, style = filled, fillcolor = " LABEL_COLOR ", label = \"free: %ld\"];\n", lst->free);
+        fprintf(dot_file, "\thead -> tail -> free [weight = 100, color = %s];\n", BACKGROUND_COLOR);
+        fprintf(dot_file, "\thead -> %d [color = %s, constraint = false];\n", lst->data[PHANTOM_ELEM].next, BORDER_COLOR);
+        fprintf(dot_file, "\ttail -> %d [color = %s, constraint = false];\n", lst->data[PHANTOM_ELEM].prev, BORDER_COLOR);
+        fprintf(dot_file, "\tfree -> %d [color = %s, constraint = false];\n", lst->free, BORDER_COLOR);
         fprintf(dot_file, "}\n");
     }
     else {

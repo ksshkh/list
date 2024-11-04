@@ -28,6 +28,7 @@ struct List {
 const size_t PHANTOM_ELEM = 0;
 const size_t InitSize = 10;
 const ListElem POISON = -666;
+const size_t PREV_DEFAULT = -1;
 
 #define debug fprintf(stderr, "head: %d tail: %d free: %d\n", lst.head, lst.tail, lst.free); \
     for(size_t i = 0; i < InitSize; i++) { \

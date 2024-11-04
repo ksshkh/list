@@ -1,0 +1,25 @@
+digraph List{
+	rankdir = LR;
+	node [shape = record];
+	edge[color = "#474344"];
+	bgcolor = "#DFD0BB";
+	0 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 0 | data: -666 | next: 1 | prev: 5"];
+	1 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 1 | data: 10 | next: 6 | prev: 0"];
+	2 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 2 | data: 20 | next: 3 | prev: 6"];
+	3 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 3 | data: 30 | next: 5 | prev: 2"];
+	4 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 4 | data: 40 | next: 7 | prev: -1"];
+	5 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 5 | data: 50 | next: 0 | prev: 3"];
+	6 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 6 | data: 15 | next: 2 | prev: 1"];
+	7 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 7 | data: 0 | next: 8 | prev: -1"];
+	8 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 8 | data: 0 | next: 9 | prev: -1"];
+	9 [color = "#474344", shape = Mrecord, style = filled, fillcolor = "#CC7952", label = "indx: 9 | data: 0 | next: 10 | prev: -1"];
+	0 -> 1	1 -> 6	6 -> 2	2 -> 3	3 -> 5	5 -> 0
+	4 -> 7	7 -> 8	8 -> 9
+	head [shape = Mrecord, style = filled, fillcolor = "#943D2C", label = "head: 1"];
+	tail [shape = Mrecord, style = filled, fillcolor = "#943D2C", label = "tail: 5"];
+	free [shape = Mrecord, style = filled, fillcolor = "#943D2C", label = "free: 4"];
+	head -> tail -> free [weight = 100, color = "#DFD0BB"];
+	head -> 1 [color = "#474344", constraint = false];
+	tail -> 5 [color = "#474344", constraint = false];
+	free -> 4 [color = "#474344", constraint = false];
+}

@@ -14,7 +14,7 @@ void ListCtor(List* lst, int* code_error) {
 
     for (size_t i = 1; i < InitSize; i++) {
         lst->data[i].next = i + 1;
-        lst->data[i].prev = -1;
+        lst->data[i].prev = PREV_DEFAULT;
     }
 
     lst->free = 1;
@@ -70,6 +70,7 @@ void DeleteElem(List* lst, size_t position, int* code_error) {
 
     lst->data[lst->data[indx].prev].next = lst->data[indx].next;
     lst->data[lst->data[indx].next].prev = lst->data[indx].prev;
+    lst->data[indx].prev = PREV_DEFAULT;
 
     lst->data[indx].next = lst->free;
     lst->free = indx;
