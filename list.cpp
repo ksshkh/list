@@ -14,6 +14,8 @@ void ListCtor(List* lst, size_t InitSize, int* code_error) {
     lst->data[PHANTOM_ELEM].value = POISON;
 
     lst->free = 1;
+    lst->linear = true;
+    lst->num_of_elems = 0;
 
     ListFilling(lst, code_error);
 
@@ -103,8 +105,14 @@ void PhysInsertElem(List* lst, ListElem elem, size_t indx, int* code_error) {
     MY_ASSERT(lst != NULL, PTR_ERROR);
     LIST_ASSERT(lst);
 
+    lst->num_of_elems++;
+
+    if(indx != LST_TAIL) {
+        lst->linear == false;
+    }
+
     if(lst->free == lst->size - 1) {
-        ListReallocation(lst, code_error);
+        ListReallocation(lst, UP_ID, code_error);
     }
 
     size_t temp_free = lst->data[lst->free].next;
@@ -157,6 +165,12 @@ void PhysDeleteElem(List* lst, size_t indx, int* code_error) {
     MY_ASSERT(lst != NULL, PTR_ERROR);
     LIST_ASSERT(lst);
 
+    lst->num_of_elems--;
+
+    if(indx != LST_TAIL) {
+        lst->linear = false;
+    }
+
     lst->data[lst->data[indx].prev].next = lst->data[indx].next;
     lst->data[lst->data[indx].next].prev = lst->data[indx].prev;
     lst->data[indx].value = POISON;
@@ -167,6 +181,10 @@ void PhysDeleteElem(List* lst, size_t indx, int* code_error) {
     lst->free = indx;
     lst->data[lst->free].prev = lst->size - 1;
     lst->data[lst->size - 1].next = lst->free;
+
+    if((lst->num_of_elems * 2) < lst->size) {
+        ListReallocation(lst, DOWN_ID, code_error);
+    }
 
     LIST_ASSERT(lst);
 }
@@ -256,12 +274,22 @@ void ListLinear(List* lst, int* code_error) {
     LIST_ASSERT(lst);
 }
 
-void ListReallocation(List* lst, int* code_error) {
+void ListReallocation(List* lst, ID id, int* code_error) {
 
     MY_ASSERT(lst != NULL, PTR_ERROR);
     LIST_ASSERT(lst);
 
-    lst->size *= 2;
+    if(lst->linear == false) {
+        ListLinear(lst, code_error);
+    }
+
+    if(id == UP_ID) {
+        lst->size *= 2;
+    }
+    else if(id == DOWN_ID) {
+        lst->size = lst->size / 2 + 1;
+    }
+
     lst->data = (Node*)realloc(lst->data, lst->size * sizeof(Node));
     MY_ASSERT(lst->data != NULL, PTR_ERROR);
 
@@ -280,5 +308,7 @@ void ListDtor(List* lst, int* code_error) {
 
     lst->size = 0;
     lst->free = 0;
+    lst->linear = 0;
+    lst->num_of_elems = 0;
 
 }

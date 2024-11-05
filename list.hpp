@@ -18,6 +18,14 @@ struct List {
     Node* data = NULL;
     size_t free = 0;
     size_t size = 0;
+
+    bool linear = true;
+    size_t num_of_elems = 0;
+};
+
+enum ID {
+    UP_ID,
+    DOWN_ID,
 };
 
 const size_t PHANTOM_ELEM = 0;
@@ -54,7 +62,7 @@ void SwapElems(List* lst, size_t indx1, size_t indx2, int* code_error);
 
 void ListLinear(List* lst, int* code_error);
 
-void ListReallocation(List* lst, int* code_error);
+void ListReallocation(List* lst, ID id, int* code_error);
 
 void ListDtor(List* lst, int* code_error);
 
