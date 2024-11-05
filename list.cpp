@@ -181,14 +181,18 @@ void SwapElems(List* lst, size_t indx1, size_t indx2, int* code_error) {
     MY_ASSERT(lst != NULL, PTR_ERROR);
     LIST_ASSERT(lst);
 
+    size_t indx_sum = indx1 + indx2;
+    indx1 = (indx1 < indx2) ? indx1 : indx2;
+    indx2 = indx_sum - indx1;
+
     ListElem save_value1 = lst->data[indx1].value;
     ListElem save_value2 = lst->data[indx2].value;
 
-    PhysInsertElem(lst, save_value2, indx1, code_error);
     PhysDeleteElem(lst, indx1, code_error);
+    PhysInsertElem(lst, save_value2, indx1 - 1, code_error);
 
-    PhysInsertElem(lst, save_value1, indx2, code_error);
     PhysDeleteElem(lst, indx2, code_error);
+    PhysInsertElem(lst, save_value1, indx1, code_error);
 
     LIST_ASSERT(lst);
 }
@@ -201,14 +205,17 @@ void ListLinear(List* lst, int* code_error) {
     size_t i = 0;
 
     do {
+
         if(i + 1 != lst->data[i].next) {
-            size_t indx = IndxGet(lst, lst->data[i].next, code_error);
-            SwapElems(lst, indx, i + 1, code_error);
+            SwapElems(lst, lst->data[i].next, i + 1, code_error);
+            DotDump(lst, code_error);
+            GraphCreate();
+            // fprintf(stderr, "%d\n", i);
         }
 
         i++;
 
-    } while(i != 0);
+    } while(lst->data[i].next != 0);
 
     LIST_ASSERT(lst);
 }
