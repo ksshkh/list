@@ -108,7 +108,7 @@ void PhysInsertElem(List* lst, ListElem elem, size_t indx, int* code_error) {
     lst->num_of_elems++;
 
     if(indx != LST_TAIL) {
-        lst->linear == false;
+        lst->linear = false;
     }
 
     if(lst->free == lst->size - 1) {
@@ -241,11 +241,7 @@ void SwapElems(List* lst, size_t indx1, size_t indx2, int* code_error) {
         lst->data[indx1].next = next2;
 
         if(indx1 == lst->free || indx2 == lst->free) {
-
-            size_t indx_sum = indx1 + indx2;
             size_t indx_free = (lst->data[indx1].value == POISON) ? indx1 : indx2;
-            size_t indx_list = indx_sum - indx_free;
-
             lst->free = indx_free;
         }
 
@@ -263,8 +259,6 @@ void ListLinear(List* lst, int* code_error) {
 
         if(i + 1 != lst->data[i].next) {
             SwapElems(lst, lst->data[i].next, i + 1, code_error);
-            DotDump(lst, code_error);
-            GraphCreate();
         }
 
         i++;

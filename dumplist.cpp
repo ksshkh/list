@@ -1,15 +1,16 @@
 #include "dumplist.hpp"
 
-#define NODE_COLOR "\"#F1C8CB\""
-#define LABEL_COLOR "\"#F6B0BB\""
-#define NODE_BORDER_COLOR "\"#9CAD8C\""
+#define NODE_COLOR         "\"#F1C8CB\""
+#define LABEL_COLOR        "\"#F6B0BB\""
+#define NODE_BORDER_COLOR  "\"#9CAD8C\""
 #define LABEL_BORDER_COLOR "\"#337357\""
-#define BACKGROUND_COLOR "\"#ECE0DA\""
+#define BACKGROUND_COLOR   "\"#ECE0DA\""
 
-static const char* DOT_FILE_NAME = "./debug/list.dot";
+static const char* DOT_FILE_NAME   = "./debug/list.dot";
 static const char* DEBUG_FILE_NAME = "./debug/list_dump.txt";
+static const char* IMAGE_NAME      = "./debug/list_image.svg";
+static const char* HTML_FILE_NAME  = "./debug/list.html";
 
-static int GRAPH_NUM = 1;
 
 void DotDump(List* lst, int* code_error) {
 
@@ -57,15 +58,6 @@ void DotDump(List* lst, int* code_error) {
 
         } while(i != lst->free);
 
-        // while(i < lst->size - 1) {
-
-        //     if(lst->data[i].next == lst->size) {
-        //         break;
-        //     }
-
-        //     fprintf(dot_file, "\t%ld -> %ld [constraint = false];\n", i, lst->data[i].next);
-        //     i = lst->data[i].next;
-        // }
         fprintf(dot_file, "\n");
 
         fprintf(dot_file, "\thead [color = " LABEL_BORDER_COLOR ", shape = Mrecord, style = filled, fillcolor = " LABEL_COLOR ", label = \"head: %ld\"];\n", lst->data[PHANTOM_ELEM].next);
@@ -81,21 +73,39 @@ void DotDump(List* lst, int* code_error) {
         fprintf(stderr, "file did not open\n");
     }
 
-    fclose(dot_file);
+    MY_ASSERT(fclose(dot_file) == 0, FILE_ERROR);
+
+    GraphCreate();
+
+    HtmlDump(code_error);
 }
 
 void GraphCreate(void) {
 
-    char command[] = "dot -Tpng /home/ksenia/huawei/list/debug/list.dot -o /home/ksenia/huawei/list/debug/list";
-    char exp[] = ".png";
-    char graph_num_str[2] = {};
-
-    snprintf(graph_num_str, 2,  "%d", GRAPH_NUM);
-    strcat(command, graph_num_str);
-    strcat(command, exp);
+    char command[] = "dot -Tsvg /home/ksenia/huawei/list/debug/list.dot -o /home/ksenia/huawei/list/debug/list_image.svg";
     system(command);
 
-    GRAPH_NUM++;
+}
+
+void HtmlDump(int *code_error) {
+
+    FILE* image = fopen(IMAGE_NAME, "r");
+    MY_ASSERT(image != NULL, FILE_ERROR);
+
+    FILE* html = fopen(HTML_FILE_NAME, "a");
+    MY_ASSERT(image != NULL, FILE_ERROR);
+
+    size_t image_size = count_size_file(image, code_error);
+
+    char *image_data = (char*)calloc(image_size, sizeof(char));
+    MY_ASSERT(image_data != NULL, FILE_ERROR);
+
+    fread(image_data, sizeof(char), image_size, image);
+
+    fprintf(html, "%s\n", image_data);
+
+    MY_ASSERT(fclose(image) == 0, FILE_ERROR);
+    MY_ASSERT(fclose(html) == 0, FILE_ERROR);
 }
 
 void ListDump(const List* lst, int* code_error, const char* file, const char* func, int line) {
@@ -146,4 +156,18 @@ void ListDump(const List* lst, int* code_error, const char* file, const char* fu
     }
 }
 
+long int count_size_file(FILE* program, int* code_error) {
+
+    MY_ASSERT(program != NULL, FILE_ERROR);
+
+    struct stat file_info = {};
+    fstat(fileno(program), &file_info);
+
+    return file_info.st_size;
+}
+
 #undef NODE_COLOR
+#undef LABEL_COLOR
+#undef NODE_BORDER_COLOR
+#undef LABEL_BORDER_COLOR
+#undef BACKGROUND_COLOR
