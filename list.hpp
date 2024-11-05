@@ -29,8 +29,7 @@ enum ID {
 };
 
 const size_t PHANTOM_ELEM = 0;
-const ListElem POISON = -666;
-const size_t PREV_DEFAULT = -1;
+const ListElem POISON = 228337;
 
 #define LST_HEAD lst->data[PHANTOM_ELEM].next
 #define LST_TAIL lst->data[PHANTOM_ELEM].prev

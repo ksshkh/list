@@ -1,0 +1,39 @@
+digraph List{
+	rankdir = LR;
+	node [shape = record];
+	edge[color = "#9CAD8C"];
+	bgcolor = "#ECE0DA";
+	0 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 0 | data: 228337 | next: 1 | prev: 8"];
+	1 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 1 | data: 1 | next: 2 | prev: 0"];
+	2 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 2 | data: 20 | next: 3 | prev: 1"];
+	3 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 3 | data: 30 | next: 4 | prev: 2"];
+	4 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 4 | data: 40 | next: 5 | prev: 3"];
+	5 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 5 | data: 70 | next: 6 | prev: 4"];
+	6 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 6 | data: 80 | next: 7 | prev: 5"];
+	7 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 7 | data: 90 | next: 8 | prev: 6"];
+	8 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 8 | data: 2 | next: 0 | prev: 7"];
+	9 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 9 | data: 228337 | next: 10 | prev: 10"];
+	10 [color = "#9CAD8C", shape = Mrecord, style = filled, fillcolor = "#F1C8CB", label = "indx: 10 | data: 228337 | next: 9 | prev: 9"];
+
+	0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10 [weight = 100, color = "#ECE0DA"];
+	0 -> 1 [constraint = false];
+	1 -> 2 [constraint = false];
+	2 -> 3 [constraint = false];
+	3 -> 4 [constraint = false];
+	4 -> 5 [constraint = false];
+	5 -> 6 [constraint = false];
+	6 -> 7 [constraint = false];
+	7 -> 8 [constraint = false];
+	8 -> 0 [constraint = false];
+
+	9 -> 10 [constraint = false];
+	10 -> 9 [constraint = false];
+
+	head [color = "#337357", shape = Mrecord, style = filled, fillcolor = "#F6B0BB", label = "head: 1"];
+	tail [color = "#337357", shape = Mrecord, style = filled, fillcolor = "#F6B0BB", label = "tail: 8"];
+	free [color = "#337357", shape = Mrecord, style = filled, fillcolor = "#F6B0BB", label = "free: 9"];
+	head -> tail -> free [weight = 100, color = "#ECE0DA"];
+	head -> 1 [color = "#337357", constraint = false];
+	tail -> 8 [color = "#337357", constraint = false];
+	free -> 9 [color = "#337357", constraint = false];
+}

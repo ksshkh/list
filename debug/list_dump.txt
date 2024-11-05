@@ -1,0 +1,73 @@
+called from main.cpp: 39 (main)
+List [0x7ffceb717070] {
+	size = 11
+	data [0x60b30192e2a0]
+
+	free = 9
+	head = 1
+	tail = 8
+
+	data: {
+
+		indx: 1 {
+			value: 1
+			next:  2
+			prev:  0
+		}
+
+		indx: 2 {
+			value: 20
+			next:  3
+			prev:  1
+		}
+
+		indx: 3 {
+			value: 30
+			next:  4
+			prev:  2
+		}
+
+		indx: 4 {
+			value: 40
+			next:  5
+			prev:  3
+		}
+
+		indx: 5 {
+			value: 70
+			next:  6
+			prev:  4
+		}
+
+		indx: 6 {
+			value: 80
+			next:  7
+			prev:  5
+		}
+
+		indx: 7 {
+			value: 90
+			next:  8
+			prev:  6
+		}
+
+		indx: 8 {
+			value: 2
+			next:  0
+			prev:  7
+		}
+
+		indx: 9 {
+			value: 228337
+			next:  10
+			prev:  10
+		}
+
+		indx: 10 {
+			value: 228337
+			next:  9
+			prev:  9
+		}
+
+	}
+}

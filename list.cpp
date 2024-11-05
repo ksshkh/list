@@ -31,6 +31,7 @@ void ListFilling(List* lst, int* code_error) {
         lst->data[i].prev = i - 1;
         lst->data[i].value = POISON;
     }
+
     lst->data[lst->free].prev = lst->size - 1;
     lst->data[lst->size - 1].next = lst->free;
 
