@@ -1,7 +1,7 @@
 called from main.cpp: 39 (main)
-List [0x7ffceb717070] {
+List [0x7ffe4c7bbd40] {
 	size = 11
-	data [0x60b30192e2a0]
+	data [0x61e7bf9c02a0]
 
 	free = 9
 	head = 1
@@ -58,13 +58,13 @@ List [0x7ffceb717070] {
 		}
 
 		indx: 9 {
-			value: 228337
+			value: -666
 			next:  10
 			prev:  10
 		}
 
 		indx: 10 {
-			value: 228337
+			value: -666
 			next:  9
 			prev:  9
 		}
