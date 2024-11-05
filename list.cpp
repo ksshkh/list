@@ -26,9 +26,11 @@ void ListFilling(List* lst, int* code_error) {
 
     for (size_t i = lst->free; i < lst->size; i++) {
         lst->data[i].next = i + 1;
-        lst->data[i].value = 0;
-        lst->data[i].prev = PREV_DEFAULT;
+        lst->data[i].prev = i - 1;
+        lst->data[i].value = POISON;
     }
+    lst->data[lst->free].prev = lst->size - 1;
+    lst->data[lst->size - 1].next = lst->free;
 
     LIST_ASSERT(lst);
 }
@@ -69,7 +71,7 @@ int ListVerification(List* lst, int* code_error) {
             *code_error |= BREAK_LIST;
         }
 
-        if(lst->data[i].prev == PREV_DEFAULT) {
+        if(lst->data[i].value == POISON && i != PHANTOM_ELEM) {
             *code_error |= MIXED_LIST;
         }
 
@@ -79,15 +81,15 @@ int ListVerification(List* lst, int* code_error) {
 
     i = lst->free;
 
-    while(i < lst->size) {
+    do {
 
-        if(lst->data[i].prev != PREV_DEFAULT) {
+        if(lst->data[i].value != POISON) {
             *code_error |= MIXED_LIST;
         }
 
         i = lst->data[i].next;
         counter++;
-    }
+    } while(i != lst->free);
 
     if(counter != lst->size) {
         *code_error |= LOST_NODE;
@@ -101,7 +103,7 @@ void PhysInsertElem(List* lst, ListElem elem, size_t indx, int* code_error) {
     MY_ASSERT(lst != NULL, PTR_ERROR);
     LIST_ASSERT(lst);
 
-    if(lst->free == lst->size) {
+    if(lst->free == lst->size - 1) {
         ListReallocation(lst, code_error);
     }
 
@@ -114,6 +116,8 @@ void PhysInsertElem(List* lst, ListElem elem, size_t indx, int* code_error) {
     lst->data[indx].next = lst->free;
 
     lst->free = temp_free;
+    lst->data[lst->free].prev = lst->size - 1;
+    lst->data[lst->size - 1].next = lst->free;
 
     LIST_ASSERT(lst);
 }
@@ -155,10 +159,14 @@ void PhysDeleteElem(List* lst, size_t indx, int* code_error) {
 
     lst->data[lst->data[indx].prev].next = lst->data[indx].next;
     lst->data[lst->data[indx].next].prev = lst->data[indx].prev;
-    lst->data[indx].prev = PREV_DEFAULT;
+    lst->data[indx].value = POISON;
+    lst->data[indx].prev = lst->data[lst->free].prev;
+    lst->data[lst->free].prev = indx;
 
     lst->data[indx].next = lst->free;
     lst->free = indx;
+    lst->data[lst->free].prev = lst->size - 1;
+    lst->data[lst->size - 1].next = lst->free;
 
     LIST_ASSERT(lst);
 }
@@ -181,18 +189,47 @@ void SwapElems(List* lst, size_t indx1, size_t indx2, int* code_error) {
     MY_ASSERT(lst != NULL, PTR_ERROR);
     LIST_ASSERT(lst);
 
-    size_t indx_sum = indx1 + indx2;
-    indx1 = (indx1 < indx2) ? indx1 : indx2;
-    indx2 = indx_sum - indx1;
+        size_t next1 = lst->data[indx1].next;
+        size_t prev1 = lst->data[indx1].prev;
 
-    ListElem save_value1 = lst->data[indx1].value;
-    ListElem save_value2 = lst->data[indx2].value;
+        size_t next2 = lst->data[indx2].next;
+        size_t prev2 = lst->data[indx2].prev;
 
-    PhysDeleteElem(lst, indx1, code_error);
-    PhysInsertElem(lst, save_value2, indx1 - 1, code_error);
+        ListElem value1 = lst->data[indx1].value;
+        ListElem value2 = lst->data[indx2].value;
 
-    PhysDeleteElem(lst, indx2, code_error);
-    PhysInsertElem(lst, save_value1, indx1, code_error);
+        lst->data[indx1].value = value2;
+        lst->data[indx2].value = value1;
+
+        lst->data[prev1].next = indx2;
+        lst->data[indx2].prev = prev1;
+
+        if(next1 == indx2 || next2 == indx1) {
+            lst->data[next1].prev = prev1;
+            lst->data[indx2].next = indx1;
+
+            lst->data[prev2].next = next2;
+            lst->data[indx1].prev = indx2;
+        }
+        else {
+            lst->data[next1].prev = indx2;
+            lst->data[indx2].next = next1;
+
+            lst->data[prev2].next = indx1;
+            lst->data[indx1].prev = prev2;
+        }
+
+        lst->data[next2].prev = indx1;
+        lst->data[indx1].next = next2;
+
+        if(indx1 == lst->free || indx2 == lst->free) {
+
+            size_t indx_sum = indx1 + indx2;
+            size_t indx_free = (lst->data[indx1].value == POISON) ? indx1 : indx2;
+            size_t indx_list = indx_sum - indx_free;
+
+            lst->free = indx_free;
+        }
 
     LIST_ASSERT(lst);
 }
@@ -210,7 +247,6 @@ void ListLinear(List* lst, int* code_error) {
             SwapElems(lst, lst->data[i].next, i + 1, code_error);
             DotDump(lst, code_error);
             GraphCreate();
-            // fprintf(stderr, "%d\n", i);
         }
 
         i++;

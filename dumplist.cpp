@@ -43,22 +43,29 @@ void DotDump(List* lst, int* code_error) {
 
             fprintf(dot_file, "\t%ld -> %ld [constraint = false];\n", i, lst->data[i].next);
             i = lst->data[i].next;
-            
+
         } while(i != 0);
 
         fprintf(dot_file, "\n");
 
         i = lst->free;
 
-        while(i < lst->size - 1) {
-
-            if(lst->data[i].next == lst->size) {
-                break;
-            }
+        do {
 
             fprintf(dot_file, "\t%ld -> %ld [constraint = false];\n", i, lst->data[i].next);
             i = lst->data[i].next;
-        }
+
+        } while(i != lst->free);
+
+        // while(i < lst->size - 1) {
+
+        //     if(lst->data[i].next == lst->size) {
+        //         break;
+        //     }
+
+        //     fprintf(dot_file, "\t%ld -> %ld [constraint = false];\n", i, lst->data[i].next);
+        //     i = lst->data[i].next;
+        // }
         fprintf(dot_file, "\n");
 
         fprintf(dot_file, "\thead [color = " LABEL_BORDER_COLOR ", shape = Mrecord, style = filled, fillcolor = " LABEL_COLOR ", label = \"head: %ld\"];\n", lst->data[PHANTOM_ELEM].next);
