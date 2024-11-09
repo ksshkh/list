@@ -115,7 +115,7 @@ void ListDump(const List* lst, int* code_error, const char* file, const char* fu
     if(debug_file != NULL) {
         fprintf(debug_file, "called from %s: %d (%s)\n", file, line, func);
 
-        my_strerr(debug_file, code_error);
+        ErrorsPrint(debug_file, code_error);
 
         if(*code_error) {
             fprintf(stderr, "code error %d\n", *code_error);

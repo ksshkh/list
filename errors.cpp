@@ -13,7 +13,7 @@ static const char* errors_names[] = {"NO_ERROR",
                                      "LOST_NODE",
                                      "MIXED_LIST"};
 
-void my_strerr(FILE* stream, int* code_error) {
+void ErrorsPrint(FILE* stream, int* code_error) {
     for (int i = 0; i < N_ERROR; i++) {
         if (*code_error & (1 << i)) {
             fprintf(stream, "\x1b[31mERROR: %s\x1b[0m\n", errors_names[i]);
