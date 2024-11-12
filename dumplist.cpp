@@ -93,7 +93,7 @@ void HtmlDump(int *code_error) {
     MY_ASSERT(image != NULL, FILE_ERROR);
 
     FILE* html = fopen(HTML_FILE_NAME, "a");
-    MY_ASSERT(image != NULL, FILE_ERROR);
+    MY_ASSERT(html != NULL, FILE_ERROR);
 
     size_t image_size = count_size_file(image, code_error);
 
